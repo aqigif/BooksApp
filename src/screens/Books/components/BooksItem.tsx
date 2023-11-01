@@ -8,7 +8,13 @@ interface IBooksItem extends TBook {
   onPress: () => void;
 }
 
-const BooksItem = ({title, author, cover_url, onPress}: IBooksItem) => {
+const BooksItem = ({
+  title,
+  author,
+  cover_url,
+  number_edition,
+  onPress,
+}: IBooksItem) => {
   const {width} = useWindowDimensions();
   const widthFull = width - 40;
   const booksWidth = widthFull / 2;
@@ -25,6 +31,9 @@ const BooksItem = ({title, author, cover_url, onPress}: IBooksItem) => {
       </Text>
       <Text numberOfLines={1} style={BooksItemStyle.bookAuthor}>
         {author}
+      </Text>
+      <Text numberOfLines={1} style={BooksItemStyle.bookAuthor}>
+        {number_edition}
       </Text>
     </Pressable>
   );
