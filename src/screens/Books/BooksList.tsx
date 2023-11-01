@@ -12,7 +12,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'booksList'>;
 
 const BooksListScreen = ({route}: Props) => {
   const {subject} = route?.params;
-  const {goBack} = useNavigationT();
+  const {goBack, navigate} = useNavigationT();
 
   const {books} = useBooks();
   return (
@@ -31,15 +31,14 @@ const BooksListScreen = ({route}: Props) => {
         keyExtractor={item => item.title}
         windowSize={10}
         numColumns={2}
-        ListHeaderComponent={
-          <>
-            <View style={BooksListStyle.headerSpacer} />
-          </>
-        }
         renderItem={({item}) => {
           return (
             <View>
-              <BooksItem key={item.title} {...item} onPress={() => {}} />
+              <BooksItem
+                key={item.title}
+                {...item}
+                onPress={() => navigate('booksDetail', {title: item.title})}
+              />
             </View>
           );
         }}
@@ -55,7 +54,6 @@ const BooksListStyle = StyleSheet.create({
     width: '100%',
     backgroundColor: 'white',
     height: 40,
-    flex: 1,
     paddingHorizontal: 20,
   },
   container: {

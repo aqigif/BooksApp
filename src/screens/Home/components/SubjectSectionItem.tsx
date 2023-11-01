@@ -2,12 +2,14 @@
 
 import * as React from 'react';
 import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import useNavigationT from '../../../hooks/useNavigationT';
 
 interface ISubjectsSectionItem extends Subject {
   onPress: () => void;
 }
 
 const SubjectsSectionItem = ({name, books, onPress}: ISubjectsSectionItem) => {
+  const navigation = useNavigationT();
   return (
     <>
       <View style={SubjectsSectionItemStyle.subjectSection}>
@@ -16,23 +18,28 @@ const SubjectsSectionItem = ({name, books, onPress}: ISubjectsSectionItem) => {
           {books.map((item, index) => {
             const first = index === 0;
             return (
-              <View
-                key={item.title}
-                style={[
-                  SubjectsSectionItemStyle.bookContainer,
-                  first && SubjectsSectionItemStyle.bookContainerFirst,
-                ]}>
-                <Text
-                  numberOfLines={2}
-                  style={SubjectsSectionItemStyle.bookTitle}>
-                  {item.title}
-                </Text>
-                <Text
-                  numberOfLines={2}
-                  style={SubjectsSectionItemStyle.bookAuthor}>
-                  {item.author}
-                </Text>
-              </View>
+              <Pressable
+                onPress={() =>
+                  navigation.navigate('booksDetail', {title: item.title})
+                }>
+                <View
+                  key={item.title}
+                  style={[
+                    SubjectsSectionItemStyle.bookContainer,
+                    first && SubjectsSectionItemStyle.bookContainerFirst,
+                  ]}>
+                  <Text
+                    numberOfLines={2}
+                    style={SubjectsSectionItemStyle.bookTitle}>
+                    {item.title}
+                  </Text>
+                  <Text
+                    numberOfLines={2}
+                    style={SubjectsSectionItemStyle.bookAuthor}>
+                    {item.author}
+                  </Text>
+                </View>
+              </Pressable>
             );
           })}
         </ScrollView>

@@ -3,5 +3,7 @@ type RootStackParamList = {
   booksList: {
     subject: string;
   };
-  booksDetail: undefined;
+  booksDetail: {
+    title: string;
+  };
 };
