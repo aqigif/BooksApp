@@ -69,7 +69,7 @@ const BooksDetailScreen = ({route}: Props) => {
         </Text>
         <Button
           title="Borrow this book"
-          onPress={() => navigate('dashboard/checkout', {title: title})}
+          onPress={() => navigate('dashboard/checkout', {key: key})}
         />
       </View>
     </>
