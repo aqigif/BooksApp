@@ -6,9 +6,11 @@ import {FlatList, StyleSheet, Text, View} from 'react-native';
 import useSubject from '../../state/subjects/store';
 
 import SubjectsSectionItem from './components/SubjectSectionItem';
+import useNavigationT from '../../hooks/useNavigationT';
 
 const HomeScreen = () => {
   const {topSubjects} = useSubject();
+  const navigation = useNavigationT();
   return (
     <>
       <FlatList
@@ -27,7 +29,13 @@ const HomeScreen = () => {
           </>
         }
         renderItem={({item}) => (
-          <SubjectsSectionItem key={item.name} {...item} onPress={() => {}} />
+          <SubjectsSectionItem
+            key={item.name}
+            {...item}
+            onPress={() =>
+              navigation.navigate('booksList', {subject: item.name})
+            }
+          />
         )}
       />
     </>

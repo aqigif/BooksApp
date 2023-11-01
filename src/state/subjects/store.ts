@@ -1,4 +1,3 @@
-// myStore.js
 import {create} from 'zustand';
 
 interface ISubjectState {

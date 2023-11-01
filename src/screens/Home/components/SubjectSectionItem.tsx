@@ -22,10 +22,14 @@ const SubjectsSectionItem = ({name, books, onPress}: ISubjectsSectionItem) => {
                   SubjectsSectionItemStyle.bookContainer,
                   first && SubjectsSectionItemStyle.bookContainerFirst,
                 ]}>
-                <Text style={SubjectsSectionItemStyle.bookTitle}>
+                <Text
+                  numberOfLines={2}
+                  style={SubjectsSectionItemStyle.bookTitle}>
                   {item.title}
                 </Text>
-                <Text style={SubjectsSectionItemStyle.bookAuthor}>
+                <Text
+                  numberOfLines={2}
+                  style={SubjectsSectionItemStyle.bookAuthor}>
                   {item.author}
                 </Text>
               </View>

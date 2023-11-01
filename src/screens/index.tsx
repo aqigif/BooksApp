@@ -1,3 +1,6 @@
 import HomeScreen from './Home/Home';
 
-export {HomeScreen};
+import BooksListScreen from './Books/BooksList';
+import BooksDetailScreen from './Books/BooksDetail';
+
+export {HomeScreen, BooksListScreen, BooksDetailScreen};
