@@ -5,6 +5,7 @@ type TRoutes = {
     subject: string;
   };
   'dashboard/books/detail': {
+    key: string;
     title: string;
   };
   'dashboard/checkout': {

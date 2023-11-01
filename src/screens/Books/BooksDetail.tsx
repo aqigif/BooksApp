@@ -1,20 +1,26 @@
 // In App.js in a new project
 
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import {Button, Pressable, StyleSheet, Text, View} from 'react-native';
 
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useNavigationT from '../../hooks/useNavigationT';
-import useBooks from '../../state/books/store';
+import useBooksDetail from '../../state/books/bookDetailStore';
 
 type Props = NativeStackScreenProps<TRoutes, 'dashboard/books/detail'>;
 
 const BooksDetailScreen = ({route}: Props) => {
-  const {title} = route?.params;
+  const {title, key} = route?.params;
   const {goBack, navigate} = useNavigationT();
 
-  const {books} = useBooks();
-  const {author} = books[0];
+  const {dataDetail, fetchDataDetail} = useBooksDetail();
+  const {author} = dataDetail;
+
+  useEffect(() => {
+    fetchDataDetail(key);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <View style={BooksDetailStyle.header}>

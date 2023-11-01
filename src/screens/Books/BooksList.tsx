@@ -47,7 +47,10 @@ const BooksListScreen = ({route}: Props) => {
                 {...item}
                 key={item.key}
                 onPress={() =>
-                  navigate('dashboard/books/detail', {title: item.title})
+                  navigate('dashboard/books/detail', {
+                    title: item.title,
+                    key: item.key.replace('/works/', ''),
+                  })
                 }
               />
             </View>

@@ -22,6 +22,7 @@ const SubjectsSectionItem = ({name, books, onPress}: ISubjectsSectionItem) => {
                 onPress={() =>
                   navigation.navigate('dashboard/books/detail', {
                     title: item.title,
+                    key: item.key.replace('/works/', ''),
                   })
                 }>
                 <View
