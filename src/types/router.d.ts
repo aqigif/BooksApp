@@ -1,6 +1,7 @@
 type TRoutes = {
   'dashboard/home': undefined;
   'dashboard/books': {
+    key: string;
     subject: string;
   };
   'dashboard/books/detail': {

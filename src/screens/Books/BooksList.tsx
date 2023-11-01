@@ -1,6 +1,6 @@
 // In App.js in a new project
 
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 
 import BooksItem from './components/BooksItem';
@@ -11,10 +11,17 @@ import useNavigationT from '../../hooks/useNavigationT';
 type Props = NativeStackScreenProps<TRoutes, 'dashboard/books'>;
 
 const BooksListScreen = ({route}: Props) => {
-  const {subject} = route?.params;
+  const {key, subject} = route?.params;
   const {goBack, navigate} = useNavigationT();
 
-  const {books} = useBooks();
+  const {books, fetchBooks, fetchBooksNextPage, refreshing, refreshBooks} =
+    useBooks();
+
+  useEffect(() => {
+    fetchBooks(key);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <View style={BooksListStyle.header}>
@@ -26,17 +33,19 @@ const BooksListScreen = ({route}: Props) => {
       </View>
       <FlatList
         data={books}
+        refreshing={refreshing}
+        onRefresh={() => refreshBooks(key)}
         initialNumToRender={3}
         contentContainerStyle={BooksListStyle.container}
-        keyExtractor={item => item.title}
+        keyExtractor={item => item.key}
         windowSize={10}
         numColumns={2}
         renderItem={({item}) => {
           return (
             <View>
               <BooksItem
-                key={item.title}
                 {...item}
+                key={item.key}
                 onPress={() =>
                   navigate('dashboard/books/detail', {title: item.title})
                 }
@@ -44,6 +53,7 @@ const BooksListScreen = ({route}: Props) => {
             </View>
           );
         }}
+        onEndReached={() => fetchBooksNextPage(key)}
       />
     </>
   );

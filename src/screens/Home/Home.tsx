@@ -1,6 +1,6 @@
 // In App.js in a new project
 
-import * as React from 'react';
+import React, {useEffect} from 'react';
 import {FlatList, StyleSheet, Text, View} from 'react-native';
 
 import useSubject from '../../state/subjects/store';
@@ -9,15 +9,21 @@ import SubjectsSectionItem from './components/SubjectSectionItem';
 import useNavigationT from '../../hooks/useNavigationT';
 
 const HomeScreen = () => {
-  const {topSubjects} = useSubject();
   const navigation = useNavigationT();
+  const {topSubjects, fetchTopSubjects} = useSubject();
+
+  useEffect(() => {
+    fetchTopSubjects();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <FlatList
         data={topSubjects}
         initialNumToRender={3}
         style={HomeStyle.container}
-        keyExtractor={item => item.name}
+        keyExtractor={item => item.key}
         windowSize={10}
         ListHeaderComponent={
           <>
@@ -30,10 +36,13 @@ const HomeScreen = () => {
         }
         renderItem={({item}) => (
           <SubjectsSectionItem
-            key={item.name}
             {...item}
+            key={item.key}
             onPress={() =>
-              navigation.navigate('dashboard/books', {subject: item.name})
+              navigation.navigate('dashboard/books', {
+                key: item.key,
+                subject: item.name,
+              })
             }
           />
         )}
