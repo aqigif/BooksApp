@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 // In App.js in a new project
 
 import * as React from 'react';
@@ -5,15 +6,15 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useNavigationT from '../../hooks/useNavigationT';
-import useBooksDetail from '../../state/books/bookDetailStore';
+import useCheckoutBook from '../../state/checkout/store';
+import dayjs from 'dayjs';
 
 type Props = NativeStackScreenProps<TRoutes, 'dashboard/checkout/success'>;
 
 const CheckoutBooksSuccessScreen = ({}: Props) => {
   const {goBack} = useNavigationT();
 
-  const {dataDetail} = useBooksDetail();
-  const {author, title} = dataDetail;
+  const {borrowed_book, id, name, email, borrow_time} = useCheckoutBook();
   return (
     <>
       <View style={CheckoutBooksSuccessStyle.header}>
@@ -33,12 +34,16 @@ const CheckoutBooksSuccessScreen = ({}: Props) => {
             {fontSize: 14, marginBottom: 5},
           ]}>
           Checkout of{' '}
-          <Text style={CheckoutBooksSuccessStyle.bookTitle}>{title}</Text>,{' '}
-          <Text style={CheckoutBooksSuccessStyle.bookTitle}>{author}</Text> is
-          success
+          <Text style={CheckoutBooksSuccessStyle.bookTitle}>
+            {borrowed_book?.title}
+          </Text>
+          ,{' '}
+          <Text style={CheckoutBooksSuccessStyle.bookTitle}>
+            {borrowed_book?.author}
+          </Text>{' '}
+          is success
         </Text>
         <Text
-          numberOfLines={1}
           style={[CheckoutBooksSuccessStyle.bookAuthor, {marginBottom: 10}]}>
           Show this QR to Library to get the book
         </Text>
@@ -48,6 +53,34 @@ const CheckoutBooksSuccessScreen = ({}: Props) => {
             style={CheckoutBooksSuccessStyle.bookTitleCover}>
             QR
           </Text>
+        </View>
+        <View style={{width: '100%', marginTop: 40}}>
+          <Text style={{marginBottom: 10, fontSize: 12}}>Booking Detail</Text>
+          <View style={{marginBottom: 10}}>
+            <Text style={{fontSize: 12}}>Booking ID :</Text>
+            <Text style={{fontSize: 12, fontWeight: 'bold'}}>{id}</Text>
+          </View>
+          <View style={{marginBottom: 10}}>
+            <Text style={{fontSize: 12}}>Name:</Text>
+            <Text style={{fontSize: 12, fontWeight: 'bold'}}>{name}</Text>
+          </View>
+          <View style={{marginBottom: 10}}>
+            <Text style={{fontSize: 12}}>Email:</Text>
+            <Text style={{fontSize: 12, fontWeight: 'bold'}}>{email}</Text>
+          </View>
+          <View style={{marginBottom: 10}}>
+            <Text style={{fontSize: 12}}>Borrow Time:</Text>
+            <Text style={{fontSize: 12, fontWeight: 'bold'}}>
+              {dayjs(new Date(borrow_time)).format('D MMMM YYYY')}
+            </Text>
+          </View>
+          <View style={{marginBottom: 10}}>
+            <Text style={{fontSize: 12}}>Book:</Text>
+            <Text style={{fontSize: 12}}>
+              <Text style={{fontWeight: 'bold'}}>{borrowed_book?.title}</Text>,
+              by {borrowed_book?.author}
+            </Text>
+          </View>
         </View>
       </View>
     </>

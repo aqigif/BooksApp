@@ -20,6 +20,7 @@ import DatePicker from 'react-native-date-picker';
 import {FormikProps, useFormik} from 'formik';
 import * as Yup from 'yup';
 import dayjs from 'dayjs';
+import useCheckoutBook from '../../state/checkout/store';
 
 type Props = NativeStackScreenProps<TRoutes, 'dashboard/checkout'>;
 
@@ -34,6 +35,7 @@ const CheckoutBooksScreen = ({route}: Props) => {
   const {key} = route?.params;
   const {goBack, navigate} = useNavigationT();
 
+  const {checkoutBorrowBook} = useCheckoutBook();
   const {dataDetail} = useBooksDetail();
   const {author, cover_url, title} = dataDetail;
 
@@ -52,8 +54,12 @@ const CheckoutBooksScreen = ({route}: Props) => {
         borrow_time: Yup.date().required('Datetime is required'),
       }),
       onSubmit: async (values: ICheckoutBooksForm) => {
-        console.log(values);
-        navigate('dashboard/checkout/success', {key: key});
+        try {
+          await checkoutBorrowBook({...values, borrowed_book: dataDetail});
+          navigate('dashboard/checkout/success', {key: key});
+        } catch (error) {
+          console.log(error);
+        }
       },
     },
   );
