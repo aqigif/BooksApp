@@ -36,6 +36,10 @@ type TBookAPIResponse = {
   last_modified: LastModified;
 };
 
+type TBookAuthorResponse = {
+  name: string;
+};
+
 type AuthorBooks = {
   author: Author2;
   type: Type;

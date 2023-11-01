@@ -54,7 +54,9 @@ const BooksDetailScreen = ({route}: Props) => {
         <Text numberOfLines={1} style={BooksDetailStyle.bookTitle}>
           {title}
         </Text>
-        <Text numberOfLines={1} style={BooksDetailStyle.bookAuthor}>
+        <Text
+          numberOfLines={1}
+          style={[BooksDetailStyle.bookAuthor, {marginBottom: 5}]}>
           {author}
         </Text>
         <Text

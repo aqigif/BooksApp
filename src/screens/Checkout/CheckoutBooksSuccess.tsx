@@ -28,20 +28,14 @@ const CheckoutBooksSuccessScreen = ({route}: Props) => {
       </View>
       <View style={CheckoutBooksSuccessStyle.bookContainer}>
         <Text
-          numberOfLines={1}
           style={[
             CheckoutBooksSuccessStyle.bookAuthor,
             {fontSize: 14, marginBottom: 5},
           ]}>
           Checkout of{' '}
-          <Text numberOfLines={1} style={CheckoutBooksSuccessStyle.bookTitle}>
-            {title}
-          </Text>
-          ,{' '}
-          <Text numberOfLines={1} style={CheckoutBooksSuccessStyle.bookTitle}>
-            {author}
-          </Text>{' '}
-          is success
+          <Text style={CheckoutBooksSuccessStyle.bookTitle}>{title}</Text>,{' '}
+          <Text style={CheckoutBooksSuccessStyle.bookTitle}>{author}</Text> is
+          success
         </Text>
         <Text
           numberOfLines={1}
@@ -76,6 +70,7 @@ const CheckoutBooksSuccessStyle = StyleSheet.create({
   },
   bookAuthor: {
     fontSize: 12,
+    textAlign: 'center',
   },
   bookContainer: {
     flex: 1,

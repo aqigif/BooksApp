@@ -1,5 +1,5 @@
 import {create} from 'zustand';
-import {getBookDetail} from '../../services/api/endpoints/books';
+import {getAuthorData, getBookDetail} from '../../services/api/endpoints/books';
 import {coverRenderUrl} from '../../utils';
 
 interface IBooksDetailState {
@@ -22,11 +22,14 @@ const useBooksDetail = create<IBooksDetailState>(set => ({
     set({loading: true});
     try {
       const data = await getBookDetail(key);
+      const author = await getAuthorData(
+        String(data.authors?.[0]?.author?.key).replace('/authors/', ''),
+      );
       set({
         loading: false,
         dataDetail: {
           key: data.key,
-          author: '',
+          author: author?.name,
           title: data.title,
           number_edition: 0,
           cover_url: coverRenderUrl(data.covers?.[0]),
