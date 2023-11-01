@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 // In App.js in a new project
 
 import React, {useEffect} from 'react';
@@ -28,6 +29,7 @@ const BooksListScreen = ({route}: Props) => {
     refreshing,
     refreshBooks,
     loading,
+    loadingPaginate,
   } = useBooks();
 
   useEffect(() => {
@@ -58,6 +60,16 @@ const BooksListScreen = ({route}: Props) => {
           <View
             style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
             {loading ? <ActivityIndicator /> : <Text>Data Not Found</Text>}
+          </View>
+        }
+        ListFooterComponent={
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: 50,
+            }}>
+            {loadingPaginate ? <ActivityIndicator /> : null}
           </View>
         }
         renderItem={({item}) => {
