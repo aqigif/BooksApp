@@ -1,8 +1,30 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+This is a new [**BooksApp**](https://reactnative.dev) project by Aqil G, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli) for Cosmart Technical Testing.
+
+# Dependencies
+
+a booksapp app, this code was builded using this dependencies :
+
+- node v18.13.0
+- npm 8.19.3
+- yarn 3.5.1
+- react-native 0.72.6
+  - [react-native documentation](https://reactnative.dev/docs/0.72/getting-started) - a JavaScript-based mobile app framework that allows you to build natively-rendered mobile apps for iOS and Android.
+  - [installing react-native dependencies link](https://reactnative.dev/docs/0.72/environment-setup#installing-dependencies) - Installing dependencies link
+- react 18.2.0
+  - [react.js documentation](https://react.dev/learn/thinking-in-react) - learn about React.js features and API.
+- ndkVersion 23.1.7779620 (install from android studio)
+- jdk by zulu (install using homebrew)
+  - openjdk 11.0.15 2022-04-19 LTS
+  - OpenJDK Runtime Environment Zulu11.56+19-CA (build 11.0.15+10-LTS)
+  - OpenJDK 64-Bit Server VM Zulu11.56+19-CA (build 11.0.15+10-LTS, mixed mode)
+- tamagui 1.57.8
+  - [tamagui](https://tamagui.dev/) - a total UI kit for Native and Web. Composable components, themeable, sizable, adapts to each platform properly.
+- zustand 4.4.1
+  - [Zustand Documentation](https://zustand-demo.pmnd.rs/) - learn about zustand, elegant state management tool
+- react-navigation v6
+  - [react navigation](https://reactnavigation.org/) - navigating between screen in react native
 
 # Getting Started
-
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
 
 ## Step 1: Start the Metro Server
 
@@ -14,11 +36,9 @@ To start Metro, run the following command from the _root_ of your React Native p
 # using npm
 npm start
 
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Start your Application
+## Step 2: Start Application
 
 Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
@@ -27,9 +47,6 @@ Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _roo
 ```bash
 # using npm
 npm run android
-
-# OR using Yarn
-yarn android
 ```
 
 ### For iOS
@@ -37,43 +54,19 @@ yarn android
 ```bash
 # using npm
 npm run ios
-
-# OR using Yarn
-yarn ios
 ```
 
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+## Step 3: Test Application
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
 
-## Step 3: Modifying your App
+### For Android
 
-Now that you have successfully run the app, let's modify it.
+```bash
+# using npm
+npm run test
+```
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+# Demo
+- [Demo](https://share.vidyard.com/watch/PTwQd8iQHph7TG69ErxJL4?) - the preview demo of BooksApp
