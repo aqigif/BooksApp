@@ -1,7 +1,14 @@
 // In App.js in a new project
 
 import React, {useEffect} from 'react';
-import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
 import BooksItem from './components/BooksItem';
 import useBooks from '../../state/books/store';
@@ -14,8 +21,14 @@ const BooksListScreen = ({route}: Props) => {
   const {key, subject} = route?.params;
   const {goBack, navigate} = useNavigationT();
 
-  const {books, fetchBooks, fetchBooksNextPage, refreshing, refreshBooks} =
-    useBooks();
+  const {
+    books,
+    fetchBooks,
+    fetchBooksNextPage,
+    refreshing,
+    refreshBooks,
+    loading,
+  } = useBooks();
 
   useEffect(() => {
     fetchBooks(key);
@@ -32,7 +45,7 @@ const BooksListScreen = ({route}: Props) => {
         <Text style={{color: 'white', fontSize: 12}}>{'< Back'}</Text>
       </View>
       <FlatList
-        data={books}
+        data={loading ? [] : books}
         refreshing={refreshing}
         onRefresh={() => refreshBooks(key)}
         initialNumToRender={3}
@@ -40,6 +53,12 @@ const BooksListScreen = ({route}: Props) => {
         keyExtractor={item => item.key}
         windowSize={10}
         numColumns={2}
+        ListEmptyComponent={
+          <View
+            style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+            {loading ? <ActivityIndicator /> : <Text>Data Not Found</Text>}
+          </View>
+        }
         renderItem={({item}) => {
           return (
             <View>

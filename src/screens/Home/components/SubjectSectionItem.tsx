@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
+import ImageRender from '../../../components/ImageRender';
 import useNavigationT from '../../../hooks/useNavigationT';
 
 interface ISubjectsSectionItem extends TSubject {
@@ -25,23 +26,13 @@ const SubjectsSectionItem = ({name, books, onPress}: ISubjectsSectionItem) => {
                     key: item.key.replace('/works/', ''),
                   })
                 }>
-                <View
-                  key={item.title}
+                <ImageRender
+                  source={{uri: item.cover_url}}
                   style={[
                     SubjectsSectionItemStyle.bookContainer,
                     first && SubjectsSectionItemStyle.bookContainerFirst,
-                  ]}>
-                  <Text
-                    numberOfLines={2}
-                    style={SubjectsSectionItemStyle.bookTitle}>
-                    {item.title}
-                  </Text>
-                  <Text
-                    numberOfLines={2}
-                    style={SubjectsSectionItemStyle.bookAuthor}>
-                    {item.author}
-                  </Text>
-                </View>
+                  ]}
+                />
               </Pressable>
             );
           })}
@@ -80,12 +71,9 @@ const SubjectsSectionItemStyle = StyleSheet.create({
   bookContainer: {
     height: 180,
     width: 120,
-    backgroundColor: 'grey',
     marginRight: 10,
     borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 20,
+    backgroundColor: '#d7d7d7',
   },
   bookContainerFirst: {
     marginLeft: 20,

@@ -13,7 +13,8 @@ import {
 
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useNavigationT from '../../hooks/useNavigationT';
-import useBooks from '../../state/books/store';
+import ImageRender from '../../components/ImageRender';
+import useBooksDetail from '../../state/books/bookDetailStore';
 
 type Props = NativeStackScreenProps<TRoutes, 'dashboard/checkout'>;
 
@@ -21,8 +22,8 @@ const CheckoutBooksScreen = ({route}: Props) => {
   const {title} = route?.params;
   const {goBack, navigate} = useNavigationT();
 
-  const {books} = useBooks();
-  const {author} = books[0];
+  const {dataDetail} = useBooksDetail();
+  const {author, cover_url} = dataDetail;
   return (
     <>
       <View style={CheckoutBooksStyle.header}>
@@ -34,21 +35,17 @@ const CheckoutBooksScreen = ({route}: Props) => {
       </View>
       <ScrollView>
         <View style={CheckoutBooksStyle.bookContainer}>
-          <View style={[CheckoutBooksStyle.bookContainerCover]}>
-            <Text numberOfLines={2} style={CheckoutBooksStyle.bookTitleCover}>
-              {title}
-            </Text>
-            <Text numberOfLines={2} style={CheckoutBooksStyle.bookAuthorCover}>
-              {author}
-            </Text>
-          </View>
+          <ImageRender
+            source={{uri: cover_url}}
+            style={[CheckoutBooksStyle.bookContainerCover]}
+          />
           <Text numberOfLines={1} style={CheckoutBooksStyle.bookTitle}>
             {title}
           </Text>
           <Text numberOfLines={1} style={CheckoutBooksStyle.bookAuthor}>
             {author}
           </Text>
-          <View style={{width: '100%', paddingHorizontal: 20, marginTop: 40}}>
+          <View style={{width: '100%', marginTop: 40}}>
             <View>
               <Text>Borrow Time</Text>
               <TextInput
@@ -132,15 +129,13 @@ const CheckoutBooksStyle = StyleSheet.create({
   bookContainer: {
     flex: 1,
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   bookContainerCover: {
     height: 200,
     width: 140,
-    backgroundColor: 'grey',
+    backgroundColor: '#d7d7d7',
     borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 20,
   },
   header: {
     flexDirection: 'row',

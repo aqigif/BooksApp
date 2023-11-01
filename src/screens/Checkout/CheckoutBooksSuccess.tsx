@@ -5,7 +5,7 @@ import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useNavigationT from '../../hooks/useNavigationT';
-import useBooks from '../../state/books/store';
+import useBooksDetail from '../../state/books/bookDetailStore';
 
 type Props = NativeStackScreenProps<TRoutes, 'dashboard/checkout/success'>;
 
@@ -13,8 +13,8 @@ const CheckoutBooksSuccessScreen = ({route}: Props) => {
   const {title} = route?.params;
   const {goBack} = useNavigationT();
 
-  const {books} = useBooks();
-  const {author} = books[0];
+  const {dataDetail} = useBooksDetail();
+  const {author} = dataDetail;
   return (
     <>
       <View style={CheckoutBooksSuccessStyle.header}>
@@ -80,6 +80,7 @@ const CheckoutBooksSuccessStyle = StyleSheet.create({
   bookContainer: {
     flex: 1,
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   bookContainerCover: {
     height: 140,

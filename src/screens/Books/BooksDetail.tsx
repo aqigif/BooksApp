@@ -1,11 +1,19 @@
 // In App.js in a new project
 
 import React, {useEffect} from 'react';
-import {Button, Pressable, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Button,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useNavigationT from '../../hooks/useNavigationT';
 import useBooksDetail from '../../state/books/bookDetailStore';
+import ImageRender from '../../components/ImageRender';
 
 type Props = NativeStackScreenProps<TRoutes, 'dashboard/books/detail'>;
 
@@ -13,14 +21,22 @@ const BooksDetailScreen = ({route}: Props) => {
   const {title, key} = route?.params;
   const {goBack, navigate} = useNavigationT();
 
-  const {dataDetail, fetchDataDetail} = useBooksDetail();
-  const {author} = dataDetail;
+  const {dataDetail, fetchDataDetail, loading} = useBooksDetail();
+  const {author, cover_url, description} = dataDetail;
 
   useEffect(() => {
     fetchDataDetail(key);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  if (loading) {
+    return (
+      <View
+        style={[BooksDetailStyle.bookContainer, {justifyContent: 'center'}]}>
+        <ActivityIndicator />
+      </View>
+    );
+  }
   return (
     <>
       <View style={BooksDetailStyle.header}>
@@ -31,19 +47,22 @@ const BooksDetailScreen = ({route}: Props) => {
         <Text style={{color: 'white', fontSize: 12}}>{'< Back'}</Text>
       </View>
       <View style={BooksDetailStyle.bookContainer}>
-        <View style={[BooksDetailStyle.bookContainerCover]}>
-          <Text numberOfLines={2} style={BooksDetailStyle.bookTitleCover}>
-            {title}
-          </Text>
-          <Text numberOfLines={2} style={BooksDetailStyle.bookAuthorCover}>
-            {author}
-          </Text>
-        </View>
+        <ImageRender
+          source={{uri: cover_url}}
+          style={[BooksDetailStyle.bookContainerCover]}
+        />
         <Text numberOfLines={1} style={BooksDetailStyle.bookTitle}>
           {title}
         </Text>
         <Text numberOfLines={1} style={BooksDetailStyle.bookAuthor}>
           {author}
+        </Text>
+        <Text
+          style={[
+            BooksDetailStyle.bookAuthor,
+            {textAlign: 'justify', marginBottom: 10},
+          ]}>
+          {description}
         </Text>
         <Button
           title="Borrow this book"
@@ -74,15 +93,13 @@ const BooksDetailStyle = StyleSheet.create({
   bookContainer: {
     flex: 1,
     alignItems: 'center',
+    paddingHorizontal: 20,
   },
   bookContainerCover: {
     height: 200,
     width: 140,
-    backgroundColor: 'grey',
+    backgroundColor: '#d7d7d7',
     borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 20,
   },
   header: {
     flexDirection: 'row',

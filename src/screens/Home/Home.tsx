@@ -1,7 +1,13 @@
 // In App.js in a new project
 
 import React, {useEffect} from 'react';
-import {FlatList, StyleSheet, Text, View} from 'react-native';
+import {
+  ActivityIndicator,
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 
 import useSubject from '../../state/subjects/store';
 
@@ -10,7 +16,7 @@ import useNavigationT from '../../hooks/useNavigationT';
 
 const HomeScreen = () => {
   const navigation = useNavigationT();
-  const {topSubjects, fetchTopSubjects} = useSubject();
+  const {topSubjects, fetchTopSubjects, loading} = useSubject();
 
   useEffect(() => {
     fetchTopSubjects();
@@ -20,11 +26,17 @@ const HomeScreen = () => {
   return (
     <>
       <FlatList
-        data={topSubjects}
+        data={loading ? [] : topSubjects}
         initialNumToRender={3}
         style={HomeStyle.container}
         keyExtractor={item => item.key}
         windowSize={10}
+        ListEmptyComponent={
+          <View
+            style={{alignItems: 'center', justifyContent: 'center', flex: 1}}>
+            {loading ? <ActivityIndicator /> : <Text>Data Not Found</Text>}
+          </View>
+        }
         ListHeaderComponent={
           <>
             <View>

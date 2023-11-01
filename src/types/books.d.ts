@@ -2,7 +2,19 @@ type TBook = {
   key: string;
   title: string;
   author: string;
+  number_edition: number;
+  cover_url: string;
 };
+
+interface TBookDetail extends TBook {
+  key: string;
+  title: string;
+  author: string;
+  number_edition: number;
+  cover_url: string;
+  description: string;
+}
+
 type TBookAPIResponse = {
   authors: AuthorBooks[];
   covers: number[];

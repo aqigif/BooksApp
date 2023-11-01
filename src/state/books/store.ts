@@ -1,5 +1,6 @@
 import {getBooksBySubjects} from '../../services/api/endpoints/subjects';
 import {create} from 'zustand';
+import {coverRenderUrl} from '../../utils';
 
 interface ISubjectState {
   loading: boolean;
@@ -28,7 +29,9 @@ const useBooks = create<ISubjectState>((set, get) => ({
         books: data.works.map(item => ({
           key: item.key,
           title: item.title,
-          author: item.authors?.[0]?.name,
+          author: item.authors?.[0]?.name || '',
+          number_edition: item.edition_count,
+          cover_url: coverRenderUrl(item.cover_id),
         })),
       }));
     } catch (error) {
@@ -54,7 +57,9 @@ const useBooks = create<ISubjectState>((set, get) => ({
       const newBooks = data.works.map(item => ({
         key: item.key,
         title: item.title,
-        author: item.authors?.[0]?.name,
+        author: item.authors?.[0]?.name || '',
+        number_edition: item.edition_count,
+        cover_url: coverRenderUrl(item.cover_id),
       }));
       set(() => ({
         loadingPaginate: false,

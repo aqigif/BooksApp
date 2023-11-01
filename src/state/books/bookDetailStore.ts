@@ -1,9 +1,10 @@
-import {getBookDetail} from '../../services/api/endpoints/books';
 import {create} from 'zustand';
+import {getBookDetail} from '../../services/api/endpoints/books';
+import {coverRenderUrl} from '../../utils';
 
 interface IBooksDetailState {
   loading: boolean;
-  dataDetail: TBook;
+  dataDetail: TBookDetail;
   fetchDataDetail: (key: string) => void;
 }
 
@@ -13,6 +14,9 @@ const useBooksDetail = create<IBooksDetailState>(set => ({
     key: '',
     title: '',
     author: '',
+    number_edition: 0,
+    cover_url: '',
+    description: '',
   },
   fetchDataDetail: async (key: string) => {
     set({loading: true});
@@ -24,6 +28,9 @@ const useBooksDetail = create<IBooksDetailState>(set => ({
           key: data.key,
           author: '',
           title: data.title,
+          number_edition: 0,
+          cover_url: coverRenderUrl(data.covers?.[0]),
+          description: data.description,
         },
       });
     } catch (error) {}

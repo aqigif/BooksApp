@@ -1,5 +1,6 @@
-import {getBooksBySubjects} from '../../services/api/endpoints/subjects';
 import {create} from 'zustand';
+import {getBooksBySubjects} from '../../services/api/endpoints/subjects';
+import {coverRenderUrl} from '../../utils';
 
 interface ISubjectState {
   loading: boolean;
@@ -36,15 +37,20 @@ const useSubject = create<ISubjectState>((set, get) => ({
       const topSubjectsBooks = await Promise.all(promises);
       set(() => ({
         loading: false,
-        topSubjects: topSubjectsBooks.map((item, index) => ({
-          key: get().topSubjects[index].key,
-          name: get().topSubjects[index].name,
-          books: item.works.map(itemWorks => ({
+        topSubjects: topSubjectsBooks.map((item, index) => {
+          const books = item.works.map(itemWorks => ({
             key: itemWorks.key,
             title: itemWorks.title,
-            author: itemWorks.authors?.[0]?.name,
-          })),
-        })),
+            author: itemWorks.authors?.[0]?.name || '',
+            number_edition: itemWorks.edition_count,
+            cover_url: coverRenderUrl(itemWorks.cover_id),
+          })) as TBook[];
+          return {
+            key: get().topSubjects[index].key,
+            name: get().topSubjects[index].name,
+            books: books,
+          };
+        }),
       }));
     } catch (error) {
       set(() => ({loading: false}));

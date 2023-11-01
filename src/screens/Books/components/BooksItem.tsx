@@ -1,19 +1,14 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import {
-  Pressable,
-  StyleSheet,
-  Text,
-  View,
-  useWindowDimensions,
-} from 'react-native';
+import {Pressable, StyleSheet, Text, useWindowDimensions} from 'react-native';
+import ImageRender from '../../../components/ImageRender';
 
 interface IBooksItem extends TBook {
   onPress: () => void;
 }
 
-const BooksItem = ({title, author, onPress}: IBooksItem) => {
+const BooksItem = ({title, author, cover_url, onPress}: IBooksItem) => {
   const {width} = useWindowDimensions();
   const widthFull = width - 40;
   const booksWidth = widthFull / 2;
@@ -21,14 +16,10 @@ const BooksItem = ({title, author, onPress}: IBooksItem) => {
     <Pressable
       onPress={onPress}
       style={[BooksItemStyle.bookContainer, {width: booksWidth}]}>
-      <View style={[BooksItemStyle.bookContainerCover]}>
-        <Text numberOfLines={2} style={BooksItemStyle.bookTitleCover}>
-          {title}
-        </Text>
-        <Text numberOfLines={2} style={BooksItemStyle.bookAuthorCover}>
-          {author}
-        </Text>
-      </View>
+      <ImageRender
+        source={{uri: cover_url}}
+        style={[BooksItemStyle.bookContainerCover]}
+      />
       <Text numberOfLines={1} style={BooksItemStyle.bookTitle}>
         {title}
       </Text>
@@ -62,11 +53,8 @@ const BooksItemStyle = StyleSheet.create({
   bookContainerCover: {
     height: 200,
     width: 140,
-    backgroundColor: 'grey',
+    backgroundColor: '#d7d7d7',
     borderRadius: 4,
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    paddingVertical: 20,
   },
 });
 
