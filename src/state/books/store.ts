@@ -10,6 +10,7 @@ interface ISubjectState {
   refreshBooks: (key: string) => void;
   offsetPaginate: number;
   loadingPaginate: boolean;
+  endPaginate: boolean;
   fetchBooksNextPage: (key: string) => void;
 }
 
@@ -18,6 +19,7 @@ const useBooks = create<ISubjectState>((set, get) => ({
   loading: false,
   refreshing: false,
   loadingPaginate: false,
+  endPaginate: false,
   books: [],
   fetchBooks: async (key: string) => {
     set(() => ({loading: true}));
@@ -26,6 +28,7 @@ const useBooks = create<ISubjectState>((set, get) => ({
       set(() => ({
         loading: false,
         offsetPaginate: 0,
+        endPaginate: false,
         books: data.works.map(item => ({
           key: item.key,
           title: item.title,
@@ -45,7 +48,8 @@ const useBooks = create<ISubjectState>((set, get) => ({
     set(() => ({refreshing: false}));
   },
   fetchBooksNextPage: async (key: string) => {
-    if (get().loading || get().refreshing) {
+    if (get().loading || get().refreshing || get().endPaginate) {
+      set(() => ({loadingPaginate: false}));
       return;
     }
     set(() => ({loadingPaginate: true}));
@@ -62,6 +66,7 @@ const useBooks = create<ISubjectState>((set, get) => ({
         cover_url: coverRenderUrl(item.cover_id),
       }));
       set(() => ({
+        endPaginate: newBooks.length < 4 ? true : false,
         loadingPaginate: false,
         offsetPaginate: get().offsetPaginate + 4,
         books: [...get().books, ...newBooks],
