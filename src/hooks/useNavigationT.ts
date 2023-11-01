@@ -2,8 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import {NativeStackNavigationProp} from '@react-navigation/native-stack';
 
 const useNavigationT = (): NativeStackNavigationProp<TRoutes> => {
-  const navigation =
-    useNavigation<NativeStackNavigationProp<TRoutes>>();
+  const navigation = useNavigation<NativeStackNavigationProp<TRoutes>>();
   return navigation;
 };
 
@@ -24,7 +23,7 @@ export const useBack = (customBackAction?: () => void) => {
   const backToHome = () => {
     navigation.reset({
       index: 1,
-      routes: [{name: 'home'}],
+      routes: [{name: 'dashboard/home'}],
     });
   };
 
