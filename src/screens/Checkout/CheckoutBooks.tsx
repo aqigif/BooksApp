@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 // In App.js in a new project
 
 import * as React from 'react';
@@ -15,15 +16,47 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useNavigationT from '../../hooks/useNavigationT';
 import ImageRender from '../../components/ImageRender';
 import useBooksDetail from '../../state/books/bookDetailStore';
+import DatePicker from 'react-native-date-picker';
+import {FormikProps, useFormik} from 'formik';
+import * as Yup from 'yup';
+import dayjs from 'dayjs';
 
 type Props = NativeStackScreenProps<TRoutes, 'dashboard/checkout'>;
 
+interface ICheckoutBooksForm {
+  name: string;
+  email: string;
+  borrow_time: string;
+}
+
 const CheckoutBooksScreen = ({route}: Props) => {
-  const {title} = route?.params;
+  const [openDate, setOpenDate] = React.useState(false);
+  const {key} = route?.params;
   const {goBack, navigate} = useNavigationT();
 
   const {dataDetail} = useBooksDetail();
-  const {author, cover_url} = dataDetail;
+  const {author, cover_url, title} = dataDetail;
+
+  const formik: FormikProps<ICheckoutBooksForm> = useFormik<ICheckoutBooksForm>(
+    {
+      initialValues: {
+        name: '',
+        email: '',
+        borrow_time: new Date().toISOString(),
+      },
+      validationSchema: Yup.object({
+        name: Yup.string().required('Name is required'),
+        email: Yup.string()
+          .email('Invalid email address')
+          .required('Email is required'),
+        borrow_time: Yup.date().required('Datetime is required'),
+      }),
+      onSubmit: async (values: ICheckoutBooksForm) => {
+        console.log(values);
+        navigate('dashboard/checkout/success', {key: key});
+      },
+    },
+  );
   return (
     <>
       <View style={CheckoutBooksStyle.header}>
@@ -31,6 +64,7 @@ const CheckoutBooksScreen = ({route}: Props) => {
           <Text style={{fontSize: 12}}>{'< Back'}</Text>
         </Pressable>
         <Text style={CheckoutBooksStyle.headerTitle}>Checkout</Text>
+        {/* TODO: remove this hacks for centerized title */}
         <Text style={{color: 'white', fontSize: 12}}>{'< Back'}</Text>
       </View>
       <ScrollView>
@@ -45,11 +79,16 @@ const CheckoutBooksScreen = ({route}: Props) => {
           <Text numberOfLines={1} style={CheckoutBooksStyle.bookAuthor}>
             {author}
           </Text>
-          <View style={{width: '100%', marginTop: 40}}>
+          <View style={{width: '100%', marginVertical: 40}}>
             <View>
-              <Text>Borrow Time</Text>
+              <Text>Borrow Time*</Text>
               <TextInput
                 placeholder="Pick your borrow time"
+                value={dayjs(new Date(formik.values.borrow_time)).format(
+                  'D MMMM YYYY',
+                )}
+                onPressIn={() => setOpenDate(true)}
+                onFocus={formik.handleBlur('borrow_time')}
                 style={{
                   width: '100%',
                   height: 40,
@@ -59,16 +98,46 @@ const CheckoutBooksScreen = ({route}: Props) => {
                   paddingHorizontal: 10,
                 }}
               />
+              <DatePicker
+                modal
+                mode="date"
+                open={openDate}
+                date={new Date(formik.values.borrow_time)}
+                onConfirm={date => {
+                  setOpenDate(false);
+                  formik.handleChange('borrow_time')(date.toString());
+                }}
+                onCancel={() => {
+                  setOpenDate(false);
+                }}
+              />
             </View>
+            <Text style={{fontSize: 10}}>
+              Select your date, and come to library within 9am - 16pm
+            </Text>
             <Text style={{fontSize: 10}}>
               You can only borrow this books for a weeks
             </Text>
             <Text style={{fontSize: 10, marginBottom: 10}}>
               [read term and conditions for more detail]
             </Text>
+            {formik.touched.borrow_time && !!formik.errors.borrow_time && (
+              <Text
+                style={{
+                  color: 'red',
+                  fontSize: 10,
+                  marginTop: -8,
+                  marginBottom: 10,
+                }}>
+                {formik.errors.borrow_time}
+              </Text>
+            )}
             <View>
-              <Text>Name</Text>
+              <Text>Name*</Text>
               <TextInput
+                value={formik.values.name}
+                onChangeText={formik.handleChange('name')}
+                onFocus={formik.handleBlur('name')}
                 placeholder="Type your name"
                 style={{
                   width: '100%',
@@ -80,28 +149,51 @@ const CheckoutBooksScreen = ({route}: Props) => {
                   paddingHorizontal: 10,
                 }}
               />
+              {formik.touched.name && !!formik.errors.name && (
+                <Text
+                  style={{
+                    color: 'red',
+                    fontSize: 10,
+                    marginTop: -8,
+                    marginBottom: 10,
+                  }}>
+                  {formik.errors.name}
+                </Text>
+              )}
             </View>
             <View>
-              <Text>Email</Text>
+              <Text>Email*</Text>
               <TextInput
                 placeholder="Type your email"
+                value={formik.values.email}
+                onFocus={formik.handleBlur('email')}
+                onChangeText={formik.handleChange('email')}
                 style={{
                   width: '100%',
                   height: 40,
                   borderRadius: 4,
                   borderColor: '#d7d7d7',
                   borderWidth: 1,
-                  marginBottom: 10,
                   paddingHorizontal: 10,
+                  marginBottom: 10,
                 }}
               />
+              {formik.touched.email && !!formik.errors.email && (
+                <Text
+                  style={{
+                    color: 'red',
+                    fontSize: 10,
+                    marginTop: -8,
+                    marginBottom: 10,
+                  }}>
+                  {formik.errors.email}
+                </Text>
+              )}
             </View>
           </View>
           <Button
             title="Borrow this book now"
-            onPress={() =>
-              navigate('dashboard/checkout/success', {title: title})
-            }
+            onPress={() => formik.handleSubmit()}
           />
         </View>
       </ScrollView>
@@ -130,6 +222,7 @@ const CheckoutBooksStyle = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     paddingHorizontal: 20,
+    marginBottom: 40,
   },
   bookContainerCover: {
     height: 200,

@@ -42,6 +42,7 @@ const BooksListScreen = ({route}: Props) => {
           <Text style={{fontSize: 12}}>{'< Back'}</Text>
         </Pressable>
         <Text style={BooksListStyle.headerTitle}>{subject}</Text>
+        {/* TODO: remove this hacks for centerized title */}
         <Text style={{color: 'white', fontSize: 12}}>{'< Back'}</Text>
       </View>
       <FlatList

@@ -9,9 +9,9 @@ type TRoutes = {
     title: string;
   };
   'dashboard/checkout': {
-    title: string;
+    key: string;
   };
   'dashboard/checkout/success': {
-    title: string;
+    key: string;
   };
 };

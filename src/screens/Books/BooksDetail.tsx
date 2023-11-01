@@ -44,6 +44,7 @@ const BooksDetailScreen = ({route}: Props) => {
           <Text style={{fontSize: 12}}>{'< Back'}</Text>
         </Pressable>
         <Text style={BooksDetailStyle.headerTitle}>{title}</Text>
+        {/* TODO: remove this hacks for centerized title */}
         <Text style={{color: 'white', fontSize: 12}}>{'< Back'}</Text>
       </View>
       <View style={BooksDetailStyle.bookContainer}>

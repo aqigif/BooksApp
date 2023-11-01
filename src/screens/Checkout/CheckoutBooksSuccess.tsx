@@ -9,12 +9,11 @@ import useBooksDetail from '../../state/books/bookDetailStore';
 
 type Props = NativeStackScreenProps<TRoutes, 'dashboard/checkout/success'>;
 
-const CheckoutBooksSuccessScreen = ({route}: Props) => {
-  const {title} = route?.params;
+const CheckoutBooksSuccessScreen = ({}: Props) => {
   const {goBack} = useNavigationT();
 
   const {dataDetail} = useBooksDetail();
-  const {author} = dataDetail;
+  const {author, title} = dataDetail;
   return (
     <>
       <View style={CheckoutBooksSuccessStyle.header}>
@@ -24,6 +23,7 @@ const CheckoutBooksSuccessScreen = ({route}: Props) => {
         <Text style={CheckoutBooksSuccessStyle.headerTitle}>
           Checkout Success
         </Text>
+        {/* TODO: remove this hacks for centerized title */}
         <Text style={{color: 'white', fontSize: 12}}>{'< Back'}</Text>
       </View>
       <View style={CheckoutBooksSuccessStyle.bookContainer}>
