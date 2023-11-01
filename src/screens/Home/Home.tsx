@@ -33,7 +33,7 @@ const HomeScreen = () => {
             key={item.name}
             {...item}
             onPress={() =>
-              navigation.navigate('booksList', {subject: item.name})
+              navigation.navigate('dashboard/books', {subject: item.name})
             }
           />
         )}

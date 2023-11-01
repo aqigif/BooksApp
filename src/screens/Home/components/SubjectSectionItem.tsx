@@ -20,7 +20,9 @@ const SubjectsSectionItem = ({name, books, onPress}: ISubjectsSectionItem) => {
             return (
               <Pressable
                 onPress={() =>
-                  navigation.navigate('booksDetail', {title: item.title})
+                  navigation.navigate('dashboard/books/detail', {
+                    title: item.title,
+                  })
                 }>
                 <View
                   key={item.title}

@@ -1,7 +1,7 @@
 // In App.js in a new project
 
 import * as React from 'react';
-import {Button, Pressable, StyleSheet, Text, View} from 'react-native';
+import {Pressable, StyleSheet, Text, View} from 'react-native';
 
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useNavigationT from '../../hooks/useNavigationT';
@@ -9,49 +9,61 @@ import useBooks from '../../state/books/store';
 
 type Props = NativeStackScreenProps<
   RootStackParamList,
-  'dashboard/books/detail'
+  'dashboard/checkout/success'
 >;
 
-const BooksDetailScreen = ({route}: Props) => {
+const CheckoutBooksSuccessScreen = ({route}: Props) => {
   const {title} = route?.params;
-  const {goBack, navigate} = useNavigationT();
+  const {goBack} = useNavigationT();
 
   const {books} = useBooks();
   const {author} = books[0];
   return (
     <>
-      <View style={BooksDetailStyle.header}>
+      <View style={CheckoutBooksSuccessStyle.header}>
         <Pressable onPress={goBack}>
           <Text style={{fontSize: 12}}>{'< Back'}</Text>
         </Pressable>
-        <Text style={BooksDetailStyle.headerTitle}>{title}</Text>
+        <Text style={CheckoutBooksSuccessStyle.headerTitle}>
+          Checkout Success
+        </Text>
         <Text style={{color: 'white', fontSize: 12}}>{'< Back'}</Text>
       </View>
-      <View style={BooksDetailStyle.bookContainer}>
-        <View style={[BooksDetailStyle.bookContainerCover]}>
-          <Text numberOfLines={2} style={BooksDetailStyle.bookTitleCover}>
+      <View style={CheckoutBooksSuccessStyle.bookContainer}>
+        <Text
+          numberOfLines={1}
+          style={[
+            CheckoutBooksSuccessStyle.bookAuthor,
+            {fontSize: 14, marginBottom: 5},
+          ]}>
+          Checkout of{' '}
+          <Text numberOfLines={1} style={CheckoutBooksSuccessStyle.bookTitle}>
             {title}
           </Text>
-          <Text numberOfLines={2} style={BooksDetailStyle.bookAuthorCover}>
+          ,{' '}
+          <Text numberOfLines={1} style={CheckoutBooksSuccessStyle.bookTitle}>
             {author}
+          </Text>{' '}
+          is success
+        </Text>
+        <Text
+          numberOfLines={1}
+          style={[CheckoutBooksSuccessStyle.bookAuthor, {marginBottom: 10}]}>
+          Show this QR to Library to get the book
+        </Text>
+        <View style={[CheckoutBooksSuccessStyle.bookContainerCover]}>
+          <Text
+            numberOfLines={2}
+            style={CheckoutBooksSuccessStyle.bookTitleCover}>
+            QR
           </Text>
         </View>
-        <Text numberOfLines={1} style={BooksDetailStyle.bookTitle}>
-          {title}
-        </Text>
-        <Text numberOfLines={1} style={BooksDetailStyle.bookAuthor}>
-          {author}
-        </Text>
-        <Button
-          title="Borrow this book"
-          onPress={() => navigate('dashboard/checkout', {title: title})}
-        />
       </View>
     </>
   );
 };
 
-const BooksDetailStyle = StyleSheet.create({
+const CheckoutBooksSuccessStyle = StyleSheet.create({
   bookTitleCover: {
     fontWeight: 'bold',
     color: 'white',
@@ -73,12 +85,12 @@ const BooksDetailStyle = StyleSheet.create({
     alignItems: 'center',
   },
   bookContainerCover: {
-    height: 200,
+    height: 140,
     width: 140,
     backgroundColor: 'grey',
     borderRadius: 4,
     alignItems: 'center',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     paddingVertical: 20,
   },
   header: {
@@ -102,4 +114,4 @@ const BooksDetailStyle = StyleSheet.create({
   },
 });
 
-export default BooksDetailScreen;
+export default CheckoutBooksSuccessScreen;

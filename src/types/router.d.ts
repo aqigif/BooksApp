@@ -1,9 +1,15 @@
 type RootStackParamList = {
-  home: undefined;
-  booksList: {
+  'dashboard/home': undefined;
+  'dashboard/books': {
     subject: string;
   };
-  booksDetail: {
+  'dashboard/books/detail': {
+    title: string;
+  };
+  'dashboard/checkout': {
+    title: string;
+  };
+  'dashboard/checkout/success': {
     title: string;
   };
 };
