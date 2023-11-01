@@ -10,7 +10,7 @@ import {
   CheckoutBooksSuccessScreen,
 } from '../screens';
 
-const Stack = createNativeStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator<TRoutes>();
 
 export default function NavigationApp() {
   return (

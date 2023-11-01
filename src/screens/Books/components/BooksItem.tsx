@@ -9,7 +9,7 @@ import {
   useWindowDimensions,
 } from 'react-native';
 
-interface IBooksItem extends Book {
+interface IBooksItem extends TBook {
   onPress: () => void;
 }
 

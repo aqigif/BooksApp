@@ -15,7 +15,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useNavigationT from '../../hooks/useNavigationT';
 import useBooks from '../../state/books/store';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'dashboard/checkout'>;
+type Props = NativeStackScreenProps<TRoutes, 'dashboard/checkout'>;
 
 const CheckoutBooksScreen = ({route}: Props) => {
   const {title} = route?.params;

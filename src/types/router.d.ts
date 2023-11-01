@@ -1,4 +1,4 @@
-type RootStackParamList = {
+type TRoutes = {
   'dashboard/home': undefined;
   'dashboard/books': {
     subject: string;

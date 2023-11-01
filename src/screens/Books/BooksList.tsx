@@ -8,7 +8,7 @@ import useBooks from '../../state/books/store';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import useNavigationT from '../../hooks/useNavigationT';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'dashboard/books'>;
+type Props = NativeStackScreenProps<TRoutes, 'dashboard/books'>;
 
 const BooksListScreen = ({route}: Props) => {
   const {subject} = route?.params;

@@ -4,7 +4,7 @@ import * as React from 'react';
 import {Pressable, ScrollView, StyleSheet, Text, View} from 'react-native';
 import useNavigationT from '../../../hooks/useNavigationT';
 
-interface ISubjectsSectionItem extends Subject {
+interface ISubjectsSectionItem extends TSubject {
   onPress: () => void;
 }
 

@@ -1,4 +1,4 @@
-type Subject = {
+type TSubject = {
   name: string;
-  books: Book[];
+  books: TBook[];
 };
