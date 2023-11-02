@@ -17,9 +17,7 @@ a booksapp app, this code was builded using this dependencies :
   - openjdk 11.0.15 2022-04-19 LTS
   - OpenJDK Runtime Environment Zulu11.56+19-CA (build 11.0.15+10-LTS)
   - OpenJDK 64-Bit Server VM Zulu11.56+19-CA (build 11.0.15+10-LTS, mixed mode)
-- tamagui 1.57.8
-  - [tamagui](https://tamagui.dev/) - a total UI kit for Native and Web. Composable components, themeable, sizable, adapts to each platform properly.
-- zustand 4.4.1
+- zustand 4.4.5
   - [Zustand Documentation](https://zustand-demo.pmnd.rs/) - learn about zustand, elegant state management tool
 - react-navigation v6
   - [react navigation](https://reactnavigation.org/) - navigating between screen in react native
